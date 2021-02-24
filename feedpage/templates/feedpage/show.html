@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+  <a href="{% url 'feedpage:index' %}">home</a>
+  <a href="{% url 'feedpage:edit' id=feed.id %}">edit</a>
+  <h1>{{ feed.title }}</h1>
+  <p>{{ feed.content }}</p>
+  <div>  <!--여기부터 추가-->
+    태그
+    {% for tag in tags %}
+      <a href="{% url 'tag:read' id=tag.id %}">{{ tag.content }}</a>
+    {% endfor %}
+  </div> <!--여기까지 추가-->
+  {% for c in feed.comment_set.all %}
+    <p>{{ c.content }}</p>
+    {% if request.user == c.author %}
+      <form action="{% url 'feedpage:comment_delete' id=feed.id cid=c.id %}" method="POST">
+        {% csrf_token %}
+        <button>댓글 삭제</button>
+      </form>
+    {% endif %}
+  {% endfor %}
+  {% if user.is_authenticated %}
+    <form action="{% url 'feedpage:comment_create' id=feed.id %}" method="POST">
+      {% csrf_token %}
+      <input type="text" name="content" />
+      <button type="submit">댓글 달기</button>
+    </form>
+  {% endif %} 
+</div>
+{% endblock content %}

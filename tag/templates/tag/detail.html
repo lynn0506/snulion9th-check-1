@@ -1,0 +1,23 @@
+{% extends 'feedpage/../base.html' %}
+
+{% block content %}
+<div>
+  <a href="{% url 'feedpage:index' %}">home</a>
+  <h1>{{tag.content}}</h1>
+  <form action="{% url 'tag:update' id=tag.id %}" method="POST">
+    {% csrf_token %}
+    <input type="text" name="content" value='{{tag.content}}'/>
+    <button type="submit">태그 수정</button>
+  </form>
+  <form action="{% url 'tag:delete' id=tag.id %}" method="POST">
+    {% csrf_token %}
+    <button>태그 삭제</button>
+  </form>
+<div>
+<h3>게시글 목록</h3>
+<div>
+  {% for feed in feeds %}
+    <a href="{% url 'feedpage:show' id=feed.id %}">{{feed.title}}</a> </br>
+  {% endfor %}
+</div>
+{% endblock content %}

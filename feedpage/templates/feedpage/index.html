@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+  태그
+  {% for tag in tags %}
+    <a href="{% url 'tag:read' id=tag.id %}">{{ tag.content }}</a>
+  {% endfor %}
+  {% if user.is_authenticated %}
+    <form action="{% url 'tag:create' %}" method="POST">        
+      {% csrf_token %}
+      <input type="text" name="content"/>
+      <button type="submit">태그 추가</button>
+    </form>
+  {% endif %}
+</div>
+<h1>feed page</h1>
+{% if user.is_authenticated %}
+  <a href="{% url 'feedpage:new' %}">new feed</a>
+{% endif %}
+{% for feed in feeds %}
+  <div style="border: 1px solid grey;">
+    <a href="{% url 'feedpage:like' id=feed.id %}">{{ feed.like_users.count }} Likes</a> 
+    <a href="/feeds/{{ feed.id }}/">더보기</a>
+    {% if request.user == feed.author %}
+      <a href="{% url 'feedpage:delete' id=feed.id %}" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
+    {% endif %} 
+    <p>{{ feed.title }}</p>
+    <p>{{ feed.content }}</p>
+  </div>
+{% endfor %}
+{% endblock content %}

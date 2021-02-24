@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>new feed</h1>
+<form action="{% url 'feedpage:index' %}" method="POST">
+  {% csrf_token %}
+  <p>title</p>
+  <input name="title" /> <br />
+  <p>content</p>
+  <input name="content" /> <br />
+  <p>태그</p>
+  {% for tag in tags %}
+    {{ tag.content }}
+    <input name="tags" type="checkbox" value={{tag.id}} />
+  {% endfor %}
+  <input type="submit" value="submit" />
+</form>
+{% endblock content %}
