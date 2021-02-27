@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import Feed, Comment, Like
 from django.shortcuts import redirect
 from tag.models import Tag
+from django.http import JsonResponse
 
 def index(request):
     if request.method == 'GET':
@@ -68,4 +69,4 @@ class LikeView:
             feed.like_set.get(user_id=request.user.id).delete()
         else:
             Like.objects.create(user=request.user, feed=feed)
-        return redirect ('/feeds')
+        return JsonResponse({'feedLikeCount': feed.like_set.count(), 'userLikeCount': request.user.like_feeds.count()})

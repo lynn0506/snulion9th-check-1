@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
-
+{% load  static %} 
 {% block content %}
+<script src="{% static 'feedpage/index.js' %}"></script>
 <div>
   태그
   {% for tag in tags %}
@@ -20,7 +21,7 @@
 {% endif %}
 {% for feed in feeds %}
   <div style="border: 1px solid grey;">
-    <a href="{% url 'feedpage:like' id=feed.id %}">{{ feed.like_users.count }} Likes</a> 
+    <button class="{{feed.id}}-like-button" onClick="onClickLikeButton({{feed.id}})">{{ feed.like_users.count }} Likes</button>    
     <a href="/feeds/{{ feed.id }}/">더보기</a>
     {% if request.user == feed.author %}
       <a href="{% url 'feedpage:delete' id=feed.id %}" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
