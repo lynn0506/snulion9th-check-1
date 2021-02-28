@@ -30,7 +30,7 @@ def show(request, id):
 def delete(request, id):
     feed = Feed.objects.get(id=id)
     feed.delete()
-    return redirect('/feeds')
+    return JsonResponse({});
 
 def edit(request, id):
     if request.method == 'GET':

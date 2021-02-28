@@ -20,11 +20,11 @@
   <a href="{% url 'feedpage:new' %}">new feed</a>
 {% endif %}
 {% for feed in feeds %}
-  <div style="border: 1px solid grey;">
+  <div style="border: 1px solid grey;" class="feed-{{feed.id}}">
     <button class="{{feed.id}}-like-button" onClick="onClickLikeButton({{feed.id}})">{{ feed.like_users.count }} Likes</button>    
     <a href="/feeds/{{ feed.id }}/">더보기</a>
     {% if request.user == feed.author %}
-      <a href="{% url 'feedpage:delete' id=feed.id %}" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
+      <button onclick="onDeleteFeed({{feed.id}})">삭제</button>
     {% endif %} 
     <p>{{ feed.title }}</p>
     <p>{{ feed.content }}</p>

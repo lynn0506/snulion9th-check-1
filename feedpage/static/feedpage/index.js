@@ -5,3 +5,13 @@ const onClickLikeButton = async (feedId) => {
   feedLikeButton.innerHTML = `${response.data.feedLikeCount} Likes`;
   userLikeCount.innerHTML = `내가 좋아한 글 : ${response.data.userLikeCount}개`;
 }
+
+const onDeleteFeed = async (feedId) => {
+  const confirmDeleteFeed = confirm('정말 삭제하시겠습니까?');
+   
+  if(confirmDeleteFeed) {
+    await axios.delete(`/feeds/${feedId}/delete/`);
+    const feed = document.getElementsByClassName(`feed-${feedId}`)[0];
+    feed.remove();
+  }
+}
