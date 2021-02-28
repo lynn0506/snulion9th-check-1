@@ -53,14 +53,13 @@ def edit(request, id):
 class CommentView:
     def create(request, id):
         content = request.POST['content']
-        Comment.objects.create(feed_id=id, content=content, author=request.user)
-        return redirect(f'/feeds/{id}')
+        comment = Comment.objects.create(feed_id=id, content=content, author=request.user)
+        return JsonResponse({'commentId': comment.id})
         
     def delete(request, id, cid):
         c = Comment.objects.get(id=cid)
         c.delete()
-        return redirect(f'/feeds/{id}')
-    
+        return JsonResponse({})     
 class LikeView:
     def create(request, id):
         feed = Feed.objects.get(id=id)
