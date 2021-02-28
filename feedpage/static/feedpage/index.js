@@ -1,4 +1,4 @@
-const onClickLikeButton = async (feedId) => {
+const onLikeFeed = async (feedId) => {
   const feedLikeButton = document.getElementsByClassName(`${feedId}-like-button`)[0];
   const userLikeCount = document.getElementsByClassName('user-like-count')[0];
   const response = await axios.get(`/feeds/${feedId}/like/`);
@@ -11,16 +11,16 @@ const onDeleteFeed = async (feedId) => {
    
   if(confirmDeleteFeed) {
     await axios.delete(`/feeds/${feedId}/delete/`);
-    const feed = document.getElementsByClassName(`feed-${feedId}`)[0];
-    feed.remove();
+    const feedElement = document.getElementsByClassName(`feed-${feedId}`)[0];
+    feedElement.remove();
   }
 }
 
 const getTagElement = (tagContent, tagId) => {
-  var newTagDiv = document.createElement('a');
-  newTagDiv.setAttribute('href', `/tags/${tagId}/`);
-  newTagDiv.innerHTML = tagContent;
-  return newTagDiv; 
+  var newTagElement = document.createElement('a');
+  newTagElement.setAttribute('href', `/tags/${tagId}/`);
+  newTagElement.innerHTML = tagContent;
+  return newTagElement; 
 }
 
 const onAddTag = async () => {

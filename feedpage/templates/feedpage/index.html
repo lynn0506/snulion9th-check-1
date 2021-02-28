@@ -20,7 +20,7 @@
 {% endif %}
 {% for feed in feeds %}
   <div style="border: 1px solid grey;" class="feed-{{feed.id}}">
-    <button class="{{feed.id}}-like-button" onClick="onClickLikeButton({{feed.id}})">{{ feed.like_users.count }} Likes</button>    
+    <button class="{{feed.id}}-like-button" onClick="onLikeFeed({{feed.id}})">{{ feed.like_users.count }} Likes</button>    
     <a href="/feeds/{{ feed.id }}/">더보기</a>
     {% if request.user == feed.author %}
       <button onclick="onDeleteFeed({{feed.id}})">삭제</button>
