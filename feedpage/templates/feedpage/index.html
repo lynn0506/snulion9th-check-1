@@ -4,15 +4,14 @@
 <script src="{% static 'feedpage/index.js' %}"></script>
 <div>
   태그
-  {% for tag in tags %}
-    <a href="{% url 'tag:read' id=tag.id %}">{{ tag.content }}</a>
-  {% endfor %}
+  <div class="tag-list">
+    {% for tag in tags %}
+      <a href="{% url 'tag:read' id=tag.id %}">{{ tag.content }}</a>
+    {% endfor %}
+  </div>
   {% if user.is_authenticated %}
-    <form action="{% url 'tag:create' %}" method="POST">        
-      {% csrf_token %}
-      <input type="text" name="content"/>
-      <button type="submit">태그 추가</button>
-    </form>
+    <input class="tag-input" type="text" name="content"/>
+    <button onClick="onAddTag()">태그 추가</button>
   {% endif %}
 </div>
 <h1>feed page</h1>

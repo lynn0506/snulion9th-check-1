@@ -15,3 +15,22 @@ const onDeleteFeed = async (feedId) => {
     feed.remove();
   }
 }
+
+const getTagElement = (tagContent, tagId) => {
+  var newTagDiv = document.createElement('a');
+  newTagDiv.setAttribute('href', `/tags/${tagId}/`);
+  newTagDiv.innerHTML = tagContent;
+  return newTagDiv; 
+}
+
+const onAddTag = async () => {
+  const tagInputElement = document.getElementsByClassName("tag-input")[0];
+  if(tagInputElement.value) {
+    let data = new FormData();
+    data.append("content", tagInputElement.value);
+    const response = await axios.post(`/tags/new/`, data);
+    const tagElement = getTagElement(tagInputElement.value, response.data.tagId);
+    document.getElementsByClassName("tag-list")[0].appendChild(tagElement);
+    tagInputElement.value = '';
+  }
+}
